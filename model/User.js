@@ -24,16 +24,17 @@ class User{
     set login(string){
         this._login = string
     }
-    get name(){
+    get login(){
         return this._login
     }
 
     set psw(string){
         this._psw = string
     }
-    get name(){
+    get psw(){
         return this._psw
     }
 
 }
+
 module.exports = {User}
