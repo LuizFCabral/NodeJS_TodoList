@@ -3,7 +3,7 @@ create database todo_list;
 
 #Criando as tabelas
 create table users(
-	id serial primary key,
+	id int auto_increment primary key,
     nome varchar(35) not null,
     login varchar(50) not null,
     psw varchar(15) not null
@@ -11,7 +11,7 @@ create table users(
 
 
 create table toDo_list(
-	id serial primary key,
+	id int auto_increment primary key,
     idUser int not null,
     descr varchar(20) not null,
     foreign key(idUser) references users(id)
@@ -19,7 +19,7 @@ create table toDo_list(
 
 
 create table items_list(
-	id serial primary key,
+	id int auto_increment primary key,
     idList int not null,
     descr varchar(20) not null,
     sts enum('C', 'IC') default 'IC',
