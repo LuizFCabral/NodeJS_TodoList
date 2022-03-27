@@ -7,8 +7,9 @@
     <title>home</title>
 </head>
 <body>
-    <div class="home">
-        <h1><%= login %> está logado!</h1>
-    </div>
+    <form action="logout" method="post">
+        <h1> <%= login %> está logado!</h1><br>
+        <input type="submit" name="logout" value="Deslogar">
+    </form>
 </body>
 </html>

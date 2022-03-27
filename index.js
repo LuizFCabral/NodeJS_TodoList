@@ -4,8 +4,11 @@ const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
 let path = require('path')
+const { render } = require('express/lib/response')
 const app = express()
 
+//chamando a classe
+const objUser = require('./model/User')
 
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
@@ -17,30 +20,63 @@ const app = express()
     app.set ('views', path.join(__dirname, '/views'))
 
 //Rotas
-    app.post('/home.html', (req, res) => {
-        const objUser = require('./model/User')
-
+    app.post('/cadastrando', (req, res) => {
         objUser.nome = req.body.nome
         objUser.login = req.body.login
         objUser.psw = req.body.psw
 
         req.session.login = objUser.login
         insertUser(objUser)
-        res.render('home', {login: objUser.login})
+        res.redirect('/')
+    })
+
+    app.post('/logout', (req, res) => {
+        req.session.destroy()
+        res.redirect('/')
     })
 
     app.post('/cadastro.html', (req, res) => {
-        res.render('cadastro')
+        if(req.session.login){
+            res.redirect('/')
+        }
+        else{
+            res.render('cadastro')
+        }
+    })
+
+    app.post('/', (req, res) => {
+        objUser.login = req.body.login
+        objUser.psw = req.body.psw
+        
+        if(selectUser(objUser)){
+            console.log(selectUser(objUser));
+            req.session.login = objUser.login
+            res.render('home', {login: objUser.login})
+        }
+        else{
+            res.render('index')
+        }
     })
 
     app.get('/', (req, res) => {
-        res.render('index')
+        if(req.session.login){
+            res.render('home', {login: objUser.login})
+        }
+        else{
+           res.render('index') 
+        }
+        
     })
 
 //Funções
-    const insertUser = async (objUser) =>{
+    const insertUser = async (objUser) => {
         const daoUser = require('./controller/UserDAO')
         await daoUser.insertUser(objUser)
+    }
+
+    const selectUser = async (objUser) => {
+        const daoUser = require('./controller/UserDAO')
+        await daoUser.selectUser(objUser)
     }
 
 app.listen(port, () => {

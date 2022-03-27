@@ -23,10 +23,21 @@ const deleteUser = async (objUser) => {
     await con.query(query, values)
 }
 
+const selectUser = async (objUser) => {
+    const con = await conectar
+    const query = "select login from users where login = ? and psw = ?"
+    const values = [objUser.login, objUser.psw]
+    const user = await con.query(query, values)
+    
+    return await user
+}
+
+/*
 const listAll = async () => {
     const con = await conectar
     const [allUser] = ("select * from users")
 }
+*/
 
 
-module.exports = {insertUser, updateUser, deleteUser, listAll}
+module.exports = {insertUser, updateUser, deleteUser, selectUser}
