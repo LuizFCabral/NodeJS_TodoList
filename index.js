@@ -19,11 +19,14 @@ const app = express()
 //Rotas
     app.post('/home.html', (req, res) => {
         const objUser = require('./model/User')
+
         objUser.nome = req.body.nome
         objUser.login = req.body.login
         objUser.psw = req.body.psw
+
+        req.session.login = objUser.login
         insertUser(objUser)
-        res.render('home')
+        res.render('home', {login: objUser.login})
     })
 
     app.post('/cadastro.html', (req, res) => {
@@ -37,7 +40,7 @@ const app = express()
 //Funções
     const insertUser = async (objUser) =>{
         const daoUser = require('./controller/UserDAO')
-        console.log(objUser) 
+        await daoUser.insertUser(objUser)
     }
 
 app.listen(port, () => {

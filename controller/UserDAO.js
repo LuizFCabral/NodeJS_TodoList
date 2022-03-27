@@ -4,7 +4,7 @@ const conectar = db.conectar()
 
 const insertUser = async (objUser) => {
     const con = await conectar
-    const query = "insert into users (?, ?, ?) values(?, ?, ?)"
+    const query = "insert into users (nome, login, psw) values(?, ?, ?)"
     const values = [objUser.nome, objUser.login, objUser.psw]
     await con.query(query, values)
 }
