@@ -9,6 +9,7 @@ const app = express()
 
 //chamando a classe
 const objUser = require('./model/User')
+const { rejects } = require('assert')
 
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
@@ -47,15 +48,16 @@ const objUser = require('./model/User')
     app.post('/', (req, res) => {
         objUser.login = req.body.login
         objUser.psw = req.body.psw
-        
-        if(selectUser(objUser)){
-            console.log(selectUser(objUser));
-            req.session.login = objUser.login
+        selectUser(objUser).then((user) => {
+            if(user){
+                req.session.login = objUser.login
             res.render('home', {login: objUser.login})
-        }
-        else{
-            res.render('index')
-        }
+            }
+            else
+                res.render('index')
+        }, (err) => {
+            console.log(err);
+        })
     })
 
     app.get('/', (req, res) => {
@@ -74,9 +76,11 @@ const objUser = require('./model/User')
         await daoUser.insertUser(objUser)
     }
 
-    const selectUser = async (objUser) => {
+    const selectUser = (objUser) => {
         const daoUser = require('./controller/UserDAO')
-        await daoUser.selectUser(objUser)
+        return  new Promise( async (resolve, rejects) => {
+            resolve(await daoUser.selectUser(objUser))
+        })
     }
 
 app.listen(port, () => {

@@ -28,8 +28,10 @@ const selectUser = async (objUser) => {
     const query = "select login from users where login = ? and psw = ?"
     const values = [objUser.login, objUser.psw]
     const user = await con.query(query, values)
-    
-    return await user
+    if(user[0].length > 0){
+        return await user[0][0]
+    }
+    return null
 }
 
 /*
