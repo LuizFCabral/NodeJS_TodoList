@@ -7,9 +7,8 @@ let path = require('path')
 const { render } = require('express/lib/response')
 const app = express()
 
-//chamando a classe
+//call the class
 const objUser = require('./model/User')
-const { rejects } = require('assert')
 
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
@@ -20,7 +19,7 @@ const { rejects } = require('assert')
     app.use('/public', express.static(path.join(__dirname, 'public')));
     app.set ('views', path.join(__dirname, '/views'))
 
-//Rotas
+//Routers
     app.post('/cadastrando', (req, res) => {
         objUser.nome = req.body.nome
         objUser.login = req.body.login
@@ -48,10 +47,10 @@ const { rejects } = require('assert')
     app.post('/', (req, res) => {
         objUser.login = req.body.login
         objUser.psw = req.body.psw
-        selectUser(objUser).then((user) => {
+        selectLoginUser(objUser).then((user) => {
             if(user){
                 req.session.login = objUser.login
-            res.render('home', {login: objUser.login})
+                res.render('home', {login: objUser.login})
             }
             else
                 res.render('index')
@@ -70,19 +69,26 @@ const { rejects } = require('assert')
         
     })
 
-//Funções
-    const insertUser = async (objUser) => {
-        const daoUser = require('./controller/UserDAO')
-        await daoUser.insertUser(objUser)
-    }
+//Functions
+    //User functions
+        const insertUser = async (objUser) => {
+            const daoUser = require('./controller/UserDAO')
+            await daoUser.insertUser(objUser)
+        }
 
-    const selectUser = (objUser) => {
-        const daoUser = require('./controller/UserDAO')
-        return  new Promise( async (resolve, rejects) => {
-            resolve(await daoUser.selectUser(objUser))
-        })
-    }
+        const selectLoginUser = (objUser) => {
+            const daoUser = require('./controller/UserDAO')
+            return  new Promise( async (resolve) => {
+                resolve(await daoUser.selectLoginUser(objUser))
+            })
+        }
 
+    //TodoList functions
+        
+
+    //ItemsList funtions
+
+//Run Server
 app.listen(port, () => {
     console.log("Servidor rodando!")
 })
