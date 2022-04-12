@@ -64,7 +64,7 @@ const objUser = require('./model/User')
 
     app.get('/', (req, res) => {
         if(req.session.login){
-            res.render('home', {nome: objUser.nome, login: objUser.login})
+            res.render('home', {name: req.session.user.nome, login: req.session.user.login})
         }
         else{
            res.render('index') 
