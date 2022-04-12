@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
     <title>home</title>
+    <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+    <link rel="stylesheet" type="text/css" href="home.css">
+
+    <script defer>
+        const express = require('express')
+        const session = require('express-session')
+
+        app.use(session({secret: 'todosamamosmuitoprogramar'}))
+
+        const sessao = (req, res) => {
+            return req.session
+        }
+
+        function teste(){
+        }
+    </script>
+
 </head>
 <body>
     <form action="logout" method="post">
-        <h1> <%= login %> está logado!</h1><br>
-        <input type="submit" name="logout" value="Deslogar">
+        <header class="header">
+            <ul>
+                <li><box-icon name='user'></box-icon></li>
+                <li><p><%= name %></p></li>
+                <li><p><%= login %></p></li>
+                
+            </ul>
+            <button class="logout" type="submit" name="logout"><box-icon name='log-out'></box-icon></button>
+        </header>
     </form>
+    <button class="btnTeste" onclick="teste()">Teste</button>
 </body>
 </html>

@@ -13,6 +13,8 @@ const objUser = require('./model/User')
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
     app.use(bodyParser.urlencoded({extended:true}))
+    app.use(express.static(__dirname + 'public'))
+    app.use('/css', express.static(__dirname + 'public/css'))
 
     app.engine('html', require('ejs').renderFile);
     app.set ('view engine', 'html')
@@ -26,6 +28,7 @@ const objUser = require('./model/User')
         objUser.psw = req.body.psw
 
         req.session.login = objUser.login
+        req.session.nome = objUser.nome
         insertUser(objUser)
         res.redirect('/')
     })
@@ -47,10 +50,10 @@ const objUser = require('./model/User')
     app.post('/', (req, res) => {
         objUser.login = req.body.login
         objUser.psw = req.body.psw
-        selectLoginUser(objUser).then((user) => {
+        selectUser(objUser).then((user) => {
             if(user){
-                req.session.login = objUser.login
-                res.render('home', {login: objUser.login})
+                req.session.user = user
+                res.render('home', {name: req.session.user.nome, login: req.session.user.login})
             }
             else
                 res.render('index')
@@ -61,7 +64,7 @@ const objUser = require('./model/User')
 
     app.get('/', (req, res) => {
         if(req.session.login){
-            res.render('home', {login: objUser.login})
+            res.render('home', {nome: objUser.nome, login: objUser.login})
         }
         else{
            res.render('index') 
@@ -76,15 +79,15 @@ const objUser = require('./model/User')
             await daoUser.insertUser(objUser)
         }
 
-        const selectLoginUser = (objUser) => {
+        const selectUser = (objUser) => {
             const daoUser = require('./controller/UserDAO')
             return  new Promise( async (resolve) => {
-                resolve(await daoUser.selectLoginUser(objUser))
+                resolve(await daoUser.selectUser(objUser))
             })
         }
 
     //TodoList functions
-        
+
 
     //ItemsList funtions
 
