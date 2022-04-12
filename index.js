@@ -16,10 +16,13 @@ const objUser = require('./model/User')
     app.use(express.static(__dirname + 'public'))
     app.use('/css', express.static(__dirname + 'public/css'))
 
+    /*
     app.engine('html', require('ejs').renderFile);
     app.set ('view engine', 'html')
     app.use('/public', express.static(path.join(__dirname, 'public')));
     app.set ('views', path.join(__dirname, '/views'))
+    */
+    app.set ('view engine', 'ejs')
 
 //Routers
     app.post('/cadastrando', (req, res) => {
