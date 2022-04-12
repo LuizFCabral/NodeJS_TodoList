@@ -23,10 +23,10 @@ const deleteTodoList = async (objTodoList) => {
     await con.query(query, values)
 }
 
-const selectAllTodoList = async () => {
-    const con = await conectar 
-    const [allTodoList] = await con.query("select * from todo_list")
-        return await allTodoList
+const selectAllTodoList = async (objTodoList) => {
+    const con = await conectar
+    const [allTodoList] = await con.query("select * from todo_list where idUser = ?", objTodoList.idUser)
+    return await allTodoList
 }
 
 module.exports = {insertTodoList, updateTodoList, deleteTodoList, selectAllTodoList}

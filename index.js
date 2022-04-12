@@ -15,6 +15,7 @@ const objUser = require('./model/User')
     app.use(bodyParser.urlencoded({extended:true}))
     app.use(express.static(__dirname + 'public'))
     app.use('/css', express.static(__dirname + 'public/css'))
+    app.use('/js', express.static(__dirname + 'public/js'))
 
     /*
     app.engine('html', require('ejs').renderFile);
@@ -90,7 +91,7 @@ const objUser = require('./model/User')
         }
 
     //TodoList functions
-
+        
 
     //ItemsList funtions
 

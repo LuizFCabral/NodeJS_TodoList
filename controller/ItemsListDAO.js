@@ -23,9 +23,9 @@ const deleteItemsList = async (objItemsList) => {
     await con.query(query, values)
 }
 
-const selectAllItemsList = async () => {
+const selectAllItemsList = async (objItemsList) => {
     const con = await conectar 
-    const [allItems] = await con.query("select login from items_list where login = ? and psw = ?")
+    const [allItems] = await con.query("select * from items_list where idList = ?", objItemsList.idList)
     return await allItems
 }
 
