@@ -13,6 +13,13 @@
         crossorigin="anonymous">
     </script>
 
+    <script defer>
+
+        function show(){
+            $('#createList').show()
+        }
+
+    </script>
 
 </head>
 <body>
@@ -36,7 +43,7 @@
             } %>
         </div>
     
-        <button class="btnTeste">Adicionar</button>
+        <button class="btnTeste" onclick="show()">Adicionar</button>
 
         <div class="createList" id="createList" hidden>
             <input type="text" name="descr">
