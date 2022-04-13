@@ -7,8 +7,11 @@ let path = require('path')
 const { render } = require('express/lib/response')
 const app = express()
 
-//call the class
+//calling the class
 const objUser = require('./model/User')
+const objList = require('./model/TodoList')
+const objItem = require('./model/ItemsList')
+const { resolve } = require('path')
 
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
@@ -26,6 +29,7 @@ const objUser = require('./model/User')
     app.set ('view engine', 'ejs')
 
 //Routers
+    //cadastro do usuario
     app.post('/cadastrando', (req, res) => {
         objUser.nome = req.body.nome
         objUser.login = req.body.login
@@ -35,6 +39,11 @@ const objUser = require('./model/User')
         req.session.nome = objUser.nome
         insertUser(objUser)
         res.redirect('/')
+    })
+
+    //adicionando lista
+    app.post('/addList', (req, res) => {
+        objList.idUser = req.session.user.id
     })
 
     app.post('/logout', (req, res) => {
@@ -54,10 +63,20 @@ const objUser = require('./model/User')
     app.post('/', (req, res) => {
         objUser.login = req.body.login
         objUser.psw = req.body.psw
+
+        
+
         selectUser(objUser).then((user) => {
             if(user){
-                req.session.user = user
-                res.render('home', {name: req.session.user.nome, login: req.session.user.login})
+                objList.idUser = user.id
+                selectList(objList).then((list) => {
+                    req.session.list = list
+                    req.session.user = user
+                    console.log()
+                    res.render('home', {name: user.nome, login: user.login, list: list })
+                }, (err) => {
+                    console.log(err);
+                })
             }
             else
                 res.render('index')
@@ -67,8 +86,8 @@ const objUser = require('./model/User')
     })
 
     app.get('/', (req, res) => {
-        if(req.session.login){
-            res.render('home', {name: req.session.user.nome, login: req.session.user.login})
+        if(req.session.user){
+            res.render('home', {name: req.session.user.nome, login: req.session.user.login, list: req.session.list})
         }
         else{
            res.render('index') 
@@ -91,7 +110,17 @@ const objUser = require('./model/User')
         }
 
     //TodoList functions
-        
+        const insertList = async (objList) => {
+            const daoList = require('./controller/TodoListDAO')
+            await daoList.insertTodoList(objList)
+        }
+
+        const selectList = (objList) => {
+            const daoList = require('./controller/TodoListDAO')
+            return new Promise ( async (resolve) => {
+                resolve(await daoList.selectAllTodoList(objList))
+            })
+        }
 
     //ItemsList funtions
 

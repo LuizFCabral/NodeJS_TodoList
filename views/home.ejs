@@ -7,6 +7,12 @@
     <title>home</title>
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+    </script>
+
 
 </head>
 <body>
@@ -17,11 +23,25 @@
                 <li><box-icon name='user'></box-icon></li>
                 <li><p><%= name %></p></li>
                 <li><p><%= login %></p></li>
-                
             </ul>
             <button class="logout" type="submit" name="logout"><box-icon name='log-out'></box-icon></button>
         </header>
+
     </form>
-    <button class="btnTeste" onclick="teste()">Teste</button>
+    <form action="addList" method="post">
+        
+        <div class="lists">
+            <% if(name.length > 0){
+                %> <div><%= list[0].descr %></div> <%
+            } %>
+        </div>
+    
+        <button class="btnTeste">Adicionar</button>
+
+        <div class="createList" id="createList" hidden>
+            <input type="text" name="descr">
+            <button type="submit">Criar lista</button>
+        </div>
+    </form>
 </body>
 </html>
