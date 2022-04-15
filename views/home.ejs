@@ -29,33 +29,52 @@
     <form action="logout" method="post">
 
         <header class="header">
-            <ul>
-                <li><box-icon name='user'></box-icon></li>
-                <li><p><%= name %></p></li>
-                <li><p><%= login %></p></li>
-            </ul>
-            <button class="logout" type="submit" name="logout"><box-icon name='log-out'></box-icon></button>
+            <button class="logout" type="submit" name="logout"><box-icon name='log-out' color="white"></box-icon></button>
+            <nav>
+                <ul class="menu">
+                    <li><p><%= name %></p></li>
+                    <li><box-icon name='user' color="white" size="cssSize"></box-icon></li>
+                </ul>
+            </nav>
+            
         </header>
 
     </form>
     <form action="addList" method="post">
-        
-        <div class="lists">
-            <%
-                if(list.length > 0){
-                    for(let i=0; i < list.length; i++){
-                        %> <div><p><%= list[i].descr %></p></div> <%
-                    }
-                }
-            %>
-        </div>
-    
         <input type="button" class="btnTeste" onclick="show()" value="Adicionar">
 
         <div class="createList" id="createList" hidden>
             <input type="text" name="descr">
             <button type="submit">Criar lista</button>
         </div>
+        
+        <section class="lists">
+            <%
+                if(list.length > 0){
+                    for(let i=0; i < list.length; i++){
+            %> 
+                        <div class="list">
+                            <h3><%= list[i].descr %></h3>
+                            <ul>
+                            <%
+                                for(let i=0; i < list.length; i++){
+                                    %>
+                                    <li>
+                                        <label>
+                                            <input type="checkbox"/>
+                                            <p></p>
+                                        </label>
+                                    </li>
+                                    <%
+                                }
+                            %>
+                            </ul>
+                        </div> 
+            <%
+                    }
+                }
+            %>
+        </section>
     </form>
 </body>
 </html>

@@ -4,8 +4,8 @@ const conectar = db.conectar()
 
 const insertItemsList = async (objItemsList) => {
     const con = await conectar
-    const query = "insert into items_list (nome, login, psw) values(?, ?, ?)"
-    const values = [objItemsList.nome, objItemsList.login, objItemsList.psw]
+    const query = "insert into items_list (idList, descr, sts, priority) values(?, ?, ?, ?)"
+    const values = [objItemsList.idList, objItemsList.descr, objItemsList.sts, objItemsList.priority]
     await con.query(query, values)
 }
 

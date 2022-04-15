@@ -19,13 +19,6 @@ const { resolve } = require('path')
     app.use(express.static(__dirname + '/public'))
     app.use('/css', express.static(__dirname + 'public/css'))
     app.use('/js', express.static(__dirname + 'public/js'))
-
-    /*
-    app.engine('html', require('ejs').renderFile);
-    app.set ('view engine', 'html')
-    app.use('/public', express.static(path.join(__dirname, 'public')));
-    app.set ('views', path.join(__dirname, '/views'))
-    */
     app.set ('view engine', 'ejs')
 
 //Routers
@@ -46,15 +39,21 @@ const { resolve } = require('path')
         objList.idUser = req.session.user.id
         objList.descr = req.body.descr
         insertList(objList)
-        res.redirect('/')
-        
+        selectList(objList).then((list) => {
+            req.session.list = list
+            res.redirect('/')
+        }, (err) => {
+            console.log(err);
+        })
     })
 
+    //deslogar
     app.post('/logout', (req, res) => {
         req.session.destroy()
         res.redirect('/')
     })
 
+    //pagina de cadastro
     app.post('/cadastro.html', (req, res) => {
         if(req.session.login){
             res.redirect('/')
@@ -64,12 +63,11 @@ const { resolve } = require('path')
         }
     })
 
+
+    //login
     app.post('/', (req, res) => {
         objUser.login = req.body.login
         objUser.psw = req.body.psw
-
-        
-
         selectUser(objUser).then((user) => {
             if(user){
                 objList.idUser = user.id
@@ -89,6 +87,7 @@ const { resolve } = require('path')
         })
     })
 
+    //pagina inicial
     app.get('/', (req, res) => {
         if(req.session.user){
             res.render('home', {name: req.session.user.nome, login: req.session.user.login, list: req.session.list})
@@ -127,6 +126,24 @@ const { resolve } = require('path')
         }
 
     //ItemsList funtions
+        const insertItem = async (objItem) => {
+            const daoItem = require('./controller/ItemsListDAO')
+            await daoItem.insertItemsList(objItem)
+        }
+
+        const selectItem = (objItem) => {
+            const daoItem = require('./controller/ItemsListDAO')
+            return new Promise ( async (resolve) => {
+                resolve(await daoItem.selectAllItemsList(objItem))
+            })
+        }
+
+        const updateItem = (objItem) => {
+            const daoItem = require('./controller/ItemsListDAO')
+            return new Promise ( async (resolve) => {
+                resolve(await daoItem.selectAllTodoList(objItem))
+            })
+        }
 
 //Run Server
 app.listen(port, () => {
