@@ -13,7 +13,10 @@
         crossorigin="anonymous">
     </script>
 
+    <%- include('./css/homecss')%>
+
     <script defer>
+
 
         function show(){
             $('#createList').show()
@@ -38,12 +41,16 @@
     <form action="addList" method="post">
         
         <div class="lists">
-            <% if(name.length > 0){
-                %> <div><%= list[0].descr %></div> <%
-            } %>
+            <%
+                if(list.length > 0){
+                    for(let i=0; i < list.length; i++){
+                        %> <div><p><%= list[i].descr %></p></div> <%
+                    }
+                }
+            %>
         </div>
     
-        <button class="btnTeste" onclick="show()">Adicionar</button>
+        <input type="button" class="btnTeste" onclick="show()" value="Adicionar">
 
         <div class="createList" id="createList" hidden>
             <input type="text" name="descr">

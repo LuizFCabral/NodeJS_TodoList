@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
 let path = require('path')
-const { render } = require('express/lib/response')
+const { render, redirect } = require('express/lib/response')
 const app = express()
 
 //calling the class
@@ -16,7 +16,7 @@ const { resolve } = require('path')
 //Configs
     app.use(session({secret: 'todosamamosmuitoprogramar'}))
     app.use(bodyParser.urlencoded({extended:true}))
-    app.use(express.static(__dirname + 'public'))
+    app.use(express.static(__dirname + '/public'))
     app.use('/css', express.static(__dirname + 'public/css'))
     app.use('/js', express.static(__dirname + 'public/js'))
 
@@ -44,6 +44,10 @@ const { resolve } = require('path')
     //adicionando lista
     app.post('/addList', (req, res) => {
         objList.idUser = req.session.user.id
+        objList.descr = req.body.descr
+        insertList(objList)
+        res.redirect('/')
+        
     })
 
     app.post('/logout', (req, res) => {
