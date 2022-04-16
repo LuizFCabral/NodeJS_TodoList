@@ -22,6 +22,14 @@ const { resolve } = require('path')
     app.set ('view engine', 'ejs')
 
 //Routers
+    //teste
+    app.post('/list', (req, res) => {
+        console.log(req.body.teste)
+        console.log(req.body.teste2)
+        res.redirect('/')
+    })
+
+
     //cadastro do usuario
     app.post('/cadastrando', (req, res) => {
         objUser.nome = req.body.nome
@@ -62,7 +70,6 @@ const { resolve } = require('path')
             res.render('cadastro')
         }
     })
-
 
     //login
     app.post('/', (req, res) => {

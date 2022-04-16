@@ -17,6 +17,10 @@
 
     <script defer>
 
+        function teste(){
+            const teste = document.getElementById('teste')
+            alert(teste)
+        }
 
         function show(){
             $('#createList').show()
@@ -27,54 +31,55 @@
 </head>
 <body>
     <form action="logout" method="post">
-
         <header class="header">
-            <button class="logout" type="submit" name="logout"><box-icon name='log-out' color="white"></box-icon></button>
+            <button class="logout" type="submit" name="logout"><box-icon class="logouticon" name='log-out' color="white"></box-icon></button>
             <nav>
                 <ul class="menu">
                     <li><p><%= name %></p></li>
                     <li><box-icon name='user' color="white" size="cssSize"></box-icon></li>
                 </ul>
             </nav>
-            
         </header>
-
     </form>
+    <!--Lista-->
     <form action="addList" method="post">
+        <!--Adicionando listas-->
         <input type="button" class="btnTeste" onclick="show()" value="Adicionar">
-
         <div class="createList" id="createList" hidden>
             <input type="text" name="descr">
+            <div></div>
             <button type="submit">Criar lista</button>
         </div>
-        
-        <section class="lists">
-            <%
-                if(list.length > 0){
-                    for(let i=0; i < list.length; i++){
-            %> 
-                        <div class="list">
-                            <h3><%= list[i].descr %></h3>
-                            <ul>
-                            <%
-                                for(let i=0; i < list.length; i++){
-                                    %>
-                                    <li>
-                                        <label>
-                                            <input type="checkbox"/>
-                                            <p></p>
-                                        </label>
-                                    </li>
-                                    <%
-                                }
-                            %>
-                            </ul>
-                        </div> 
-            <%
-                    }
-                }
-            %>
-        </section>
     </form>
+
+    <!--Mostrando listas-->
+    <section class="lists">
+        <%
+            if(list.length > 0){
+                for(let i=0; i < list.length; i++){
+        %> 
+                <div class="list">
+                    <h2><%= list[i].descr %></h2>
+                    <ul>
+                    <%
+                        for(let i=0; i < list.length; i++){
+                            %>
+                            <li>
+                                <label>
+                                    <input type="checkbox"/>
+                                    <p><%= list[i].descr %></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                            <%
+                        }
+                    %>
+                    </ul>
+                </div>
+        <%
+                }
+            }
+        %>
+    </section>
 </body>
 </html>

@@ -1,15 +1,19 @@
 <style>
     :root{
-        --clrHeader: #a25aff;
+        --clrHeader: #6614d1;
         --clrHeaderL: #19bcfe;
     }
 
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
     body, ul, li p, h3{
         margin: 0px;
         padding: 0px;
         list-style: none;
-        font-size: 1.5rem;
         font-family: Arial;
     }
 
@@ -20,8 +24,7 @@
 
     /* HEADER */
     .header{
-        position: fixed;
-        top: 0;
+        font-size: 1.5rem;
         width: 100%;
         background: var(--clrHeader);
         color: white;
@@ -45,13 +48,112 @@
         margin-right: 20px;
     }
 
-    .header > button{
+    .header  button{
         border: none;
         background: var(--clrHeader);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
         outline: none;
     }
 
+    .header button:hover{
+        background-color: #7d34de;
+    }
 
+    /* Listas */
+    .lists{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 
+    .lists div{
+        flex: 1 1 200;
+        margin: 10px;
+    }
+
+    .list{
+        position: relative;
+        width: 310px;
+        border: 1px solid #ccc;
+    }
+
+    .list h2{
+        background: var(--clrHeaderL);
+        color: #fff;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+
+    .list ul{
+        position: relative;
+        padding: 20px;
+    }
+
+    .list ul li{
+        position: relative;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .list ul li:last-child{
+        border-bottom: none;
+    }
+
+    .list ul li label{
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .list ul li label input{
+        visibility: hidden;
+        appearance: none;
+    }
+
+    .list ul li label p{
+        position: absolute;
+    }
+
+    .list ul li label span{
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .list ul li label span:before{
+        content: '';
+        position: absolute;
+        top: 5px;
+        width: 10px;
+        height: 5px;
+        border-left: 2px solid #ccc;
+        border-bottom: 2px solid #ccc;
+        transform: rotate(-40deg);
+    }
+
+    .list ul li label input:checked ~ p{
+        text-decoration: line-through;
+        color: #ccc;
+    }
+
+    .list ul li label input:checked ~ span{
+        background: var(--clrHeaderL);
+        border: 1px solid var(--clrHeaderL);
+    }
+
+    .list ul li label input:checked ~ span::before{
+        border-left: 2px solid #ccc;
+        border-bottom: 2px solid #ccc;
+    }
 
 </style>
