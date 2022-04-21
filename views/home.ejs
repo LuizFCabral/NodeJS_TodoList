@@ -17,13 +17,13 @@
 
     <script defer>
 
-        function teste(){
-            const teste = document.getElementById('teste')
-            alert(teste)
-        }
-
         function show(){
-            $('#createList').show()
+            var createListVis = $("#createList").is(":visible")
+
+            if(!createListVis)
+                $("#createList").show()
+            else
+                $("#createList").hide()
         }
 
     </script>
@@ -44,12 +44,17 @@
     <!--Lista-->
     <form action="addList" method="post">
         <!--Adicionando listas-->
-        <input type="button" class="btnTeste" onclick="show()" value="Adicionar">
-        <div class="createList" id="createList" hidden>
-            <input type="text" name="descr">
-            <div></div>
-            <button type="submit">Criar lista</button>
+        <div class="opt">
+            <div class="buttonAddList">
+                <input type="button" class="showAddList" id="showAddList" onclick="show()">
+                <i class="icon-plus" disabled="true" ><box-icon name='plus'></box-icon></i>
+            </div> 
+            <div class="createList" id="createList" hidden>
+                <input type="text" name="descr">
+                <button type="submit">Criar lista</button>
+            </div>
         </div>
+        
     </form>
 
     <!--Mostrando listas-->
