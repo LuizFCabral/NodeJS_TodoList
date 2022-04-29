@@ -1,5 +1,50 @@
 <style>
 
-    
+    :root{
+        --clrHeader: #6614d1;
+    }
+
+    body{
+        min-height: 90vh;
+        font-family: Arial;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--clrHeader);
+    }
+
+    .content{
+        max-width: 700px;
+        background: #fff;
+        padding: 30px 30px;
+        border-radius: 15px;
+    }
+
+    .login{
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0 15px 0;
+    }
+
+    .login .input-box{
+        margin-bottom: 15px;
+        width: calc(100% / 2 - 20px);
+    }
+    .login .input-box span{
+        font-size: 1.5rem;
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .login .input-box input{
+        height: 30px;
+        width: 100%;
+        outline-color: var(--clrHeader);
+        border-radius: 10px;
+        border: 1px solid;
+        padding-left: 10px;
+        font-size: 25px;
+    }
 
 </style>
