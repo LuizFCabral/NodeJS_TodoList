@@ -24,8 +24,8 @@ const { resolve } = require('path')
 //Routers
     //teste
     app.post('/list', (req, res) => {
-        console.log(req.body.teste)
-        console.log(req.body.teste2)
+        const id = req.body.id
+        console.log(id)
         res.redirect('/')
     })
 

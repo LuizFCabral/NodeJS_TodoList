@@ -63,24 +63,28 @@
             if(list.length > 0){
                 for(let i=0; i < list.length; i++){
         %> 
-                <div class="list">
-                    <h2><%= list[i].descr %></h2>
-                    <ul>
-                    <%
-                        for(let i=0; i < list.length; i++){
-                            %>
-                            <li>
-                                <label>
-                                    <input type="checkbox"/>
-                                    <p><%= list[i].descr %></p>
-                                    <span></span>
-                                </label>
-                            </li>
-                            <%
-                        }
-                    %>
-                    </ul>
-                </div>
+                <form action="list" method="post">
+                    <div class="list">
+                        <input type="hidden" value="<%= list[i].id %>" name="id">
+                        <h2><%= list[i].descr %></h2>
+                        <ul>
+                        <%
+                            for(let i=0; i < list.length; i++){
+                                %>
+                                <li>
+                                    <label>
+                                        <input type="checkbox"/>
+                                        <p><%= list[i].descr %></p>
+                                        <span></span>
+                                    </label>
+                                </li>
+                                <%
+                            }
+                        %>
+                        </ul>
+                        <button>Teste</button>
+                    </div>
+                </form>
         <%
                 }
             }
