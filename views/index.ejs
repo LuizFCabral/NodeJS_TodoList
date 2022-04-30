@@ -12,20 +12,23 @@
 <body>
     <div class="content">
         <form method="post">
-        <div class="login">
-            <div class="input-box">
-                <span>Login</span>  
-                <input type="text" name="login"> 
+            <div class="login">
+                <div class="input-box">
+                    <span>Login</span>  
+                    <input type="text" name="login" placeholder="Digite seu login"> 
+                </div>
+                <div class="input-box">
+                    <span>Senha</span> 
+                    <input type="password" name="psw" placeholder="Digite sua senha"><br>
+                </div>
             </div>
-            <div class="input-box">
-                <span>Senha</span> 
-                <input type="password" name="psw"><br>
+            <div class="button">
+                <input type="submit" name="logar" value="Logar">
             </div>
-        </div>
-        <input type="submit" class="button" name="logar" value="Logar">
         </form><br>
         <form action="cadastro.html" method="post">
-            <input type="submit" class="button" value="Cadastrar">
+            <div class="button"><input type="submit" value="Cadastrar"></div>
+            
         </form>
     </div>
 </body>
