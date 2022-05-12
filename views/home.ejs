@@ -69,8 +69,8 @@
             if(list.length > 0){
                 for(let i=0; i < list.length; i++){
         %> 
-                <form action="list" method="post">
-                    <div class="list">
+                <div class="list">
+                    <form action="list" method="post">
                         <input type="hidden" value="<%= list[i].id %>" name="id">
                         <div class="headerList">
                             <h2><%= list[i].descr %></h2>
@@ -78,34 +78,37 @@
                                 <input type="button" class="btnShowItem" value="+" onclick="showAddItem()">
                                 <button class="btnDelete">-</button>
                             </div>
-                            
                         </div>
-                        <ul>
-                            <li id="addItem" hidden>
-                                <!--Cadastro de items-->
-                                <form action="addItem" method="post">
-                                    <div class="addItem">
-                                        <input type="text" name="descrItem" class="txtItem" id="txtItem">
-                                        <button type="submit" class="btnAddItem">add Item</button>
-                                    </div>
-                                </form>
-                            </li>
-                        <%
-                            for(let i=0; i < list.length; i++){
-                                %>
+                    </form>
+                    <ul>
+                        <li id="addItem" hidden>
+                            <!--Cadastro de items-->
+                            <form action="addItem" method="post">
+                                <div class="addItem">
+                                    <input type="hidden" value="<%= list[i].id %>" name="id">
+                                    <input type="text" name="descrItem" class="txtItem" id="txtItem">
+                                    <button type="submit" class="btnAddItem" action="addItem">add Item</button>
+                                </div>
+                            </form>
+                        </li>
+                    <%
+                        for(let i=0; i < list.length; i++){
+                            %>
+                            <form action="updtItem" method="post">
                                 <li>
                                     <label>
                                         <input type="checkbox"/>
-                                        <p><%= list[i].descr %></p>
+                                        
                                         <span></span>
                                     </label>
                                 </li>
-                                <%
-                            }
-                        %>
-                        </ul>
-                    </div>
-                </form>
+                            </form>
+                            
+                            <%
+                        }
+                    %>
+                    </ul>
+                </div>
         <%
                 }
             }

@@ -22,13 +22,22 @@ const { resolve } = require('path')
     app.set ('view engine', 'ejs')
 
 //Routers
-    //lista 
+    //lista
     app.post('/list', (req, res) => {
         const id = req.body.id
-        console.log(id)
         res.redirect('/')
     })
 
+    //cadastro de item
+    app.post('/addItem', (req, res) => {
+        console.log("Rodou o item");
+        objItem.idList = req.body.id
+        objItem.descr = req.body.descrItem
+
+        req.session.item = objItem
+        insertItem(objItem)
+        res.redirect('/')
+    })
 
     //cadastro do usuario
     app.post('/cadastrando', (req, res) => {
@@ -82,7 +91,6 @@ const { resolve } = require('path')
                 selectList(objList).then((list) => {
                     req.session.list = list
                     req.session.user = user
-                    console.log()
                     res.render('home', {name: user.nome, login: user.login, list: list })
                 }, (err) => {
                     console.log(err);
@@ -120,7 +128,7 @@ const { resolve } = require('path')
             })
         }
 
-    //TodoList functions
+    //List functions
         const insertList = async (objList) => {
             const daoList = require('./controller/TodoListDAO')
             await daoList.insertTodoList(objList)
