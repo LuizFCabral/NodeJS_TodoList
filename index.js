@@ -22,7 +22,7 @@ const { resolve } = require('path')
     app.set ('view engine', 'ejs')
 
 //Routers
-    //teste
+    //lista 
     app.post('/list', (req, res) => {
         const id = req.body.id
         console.log(id)
@@ -44,6 +44,7 @@ const { resolve } = require('path')
 
     //adicionando lista
     app.post('/addList', (req, res) => {
+        
         objList.idUser = req.session.user.id
         objList.descr = req.body.descr
         insertList(objList)

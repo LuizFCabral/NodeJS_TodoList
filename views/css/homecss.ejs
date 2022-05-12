@@ -61,6 +61,16 @@
         background-color: #7d34de;
     }
 
+    .headerList .buttons input{
+        height: 22px;
+        width: 22px;
+    }
+
+    .headerList .buttons .btnDelete{
+        height: 22px;
+        width: 22px;
+    }
+
     /* Listas */
     .lists{
         display: flex;
@@ -80,11 +90,25 @@
         border: 1px solid #ccc;
     }
 
-    .list h2{
+    .list .headerList{
         background: var(--clrHeaderL);
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .list .headerList h2{
         color: #fff;
         padding: 10px 20px;
         font-weight: 600;
+    }
+
+    
+
+    .list .headerList button{
+        width: 30px;
+        height: 30px;
     }
 
     .list ul{
@@ -164,6 +188,7 @@
         margin: 0 auto;
         align-items: center;
     }
+    
 
     .buttonAddList{
         position: relative;
@@ -199,5 +224,28 @@
         border-radius: 5px;
         font-size: 1rem;
     }
+
+    /* Criação dos items */
+    
+    .addItem{
+        display: flex;
+        max-height: 250px;
+        margin: 0 auto;
+        align-items: center;
+    }
+
+    .addItem .txtItem{
+        height: 30px;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline-style: none;
+    }
+    .addItem .btnAddItem{
+        height: 30px;
+        border-radius: 5px;
+        border-width: 0.1px;
+    }
+
+    
 
 </style>

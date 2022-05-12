@@ -26,6 +26,14 @@
                 $("#createList").hide()
         }
 
+        function showAddItem(){
+            var createItem = $("#addItem").is(":visible")
+
+            if(!createItem)
+                $("#addItem").show()
+            else
+                $("#addItem").hide()
+        }
     </script>
 
 </head>
@@ -42,7 +50,7 @@
         </header>
     </form>
     <!--Lista-->
-    <form action="addList" method="post">
+    <form action="addList" method="post" >
         <!--Adicionando listas-->
         <div class="opt">
             <div class="buttonAddList">
@@ -50,13 +58,11 @@
                 <i class="icon-plus" disabled="true" ><box-icon name='plus'></box-icon></i>
             </div> 
             <div class="createList" id="createList" hidden>
-                <input type="text" name="descr">
+                <input type="text" name="descr" id="descr" maxlength="15">
                 <button type="submit">Criar lista</button>
             </div>
         </div>
-        
     </form>
-
     <!--Mostrando listas-->
     <section class="lists">
         <%
@@ -66,8 +72,24 @@
                 <form action="list" method="post">
                     <div class="list">
                         <input type="hidden" value="<%= list[i].id %>" name="id">
-                        <h2><%= list[i].descr %></h2>
+                        <div class="headerList">
+                            <h2><%= list[i].descr %></h2>
+                            <div class="buttons">
+                                <input type="button" class="btnShowItem" value="+" onclick="showAddItem()">
+                                <button class="btnDelete">-</button>
+                            </div>
+                            
+                        </div>
                         <ul>
+                            <li id="addItem" hidden>
+                                <!--Cadastro de items-->
+                                <form action="addItem" method="post">
+                                    <div class="addItem">
+                                        <input type="text" name="descrItem" class="txtItem" id="txtItem">
+                                        <button type="submit" class="btnAddItem">add Item</button>
+                                    </div>
+                                </form>
+                            </li>
                         <%
                             for(let i=0; i < list.length; i++){
                                 %>
@@ -82,7 +104,6 @@
                             }
                         %>
                         </ul>
-                        <button>Teste</button>
                     </div>
                 </form>
         <%
