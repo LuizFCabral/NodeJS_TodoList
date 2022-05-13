@@ -26,13 +26,23 @@
                 $("#createList").hide()
         }
 
-        function showAddItem(){
-            var createItem = $("#addItem").is(":visible")
+        function getIdlist(event){
+            event = event || window.event
 
-            if(!createItem)
-                $("#addItem").show()
-            else
-                $("#addItem").hide()
+            var target = event.target || event.srcElement
+
+            var id = target.parentNode;
+
+            var idList = id.querySelector('.idList').value
+
+
+            showAddItem(idList)
+        }
+
+        function showAddItem(idList){
+            var idLista = document.getElementById(idList).value
+            
+            !idLista.isVisible ? document.getElementById(idList).hidden=false : document.getElementById(idList).hidden=true
         }
     </script>
 
@@ -69,19 +79,20 @@
             if(list.length > 0){
                 for(let i=0; i < list.length; i++){
         %> 
+            
                 <div class="list">
                     <form action="list" method="post">
-                        <input type="hidden" value="<%= list[i].id %>" name="id">
                         <div class="headerList">
                             <h2><%= list[i].descr %></h2>
                             <div class="buttons">
-                                <input type="button" class="btnShowItem" value="+" onclick="showAddItem()">
-                                <button class="btnDelete">-</button>
+                                <input type="hidden" class="idList" value="<%= list[i].id %>" name="id">
+                                <input type="button" class="btnShowItem" value="+" onclick="getIdlist(event)">
+                                <button class="btnDelete" >-</button>
                             </div>
                         </div>
                     </form>
                     <ul>
-                        <li id="addItem" hidden>
+                        <li id="<%= list[i].id %>" value="<%= list[i].id %>" hidden>
                             <!--Cadastro de items-->
                             <form action="addItem" method="post">
                                 <div class="addItem">
@@ -92,13 +103,19 @@
                             </form>
                         </li>
                     <%
-                        for(let i=0; i < list.length; i++){
+                        var objItemsList = new Object()
+                        for(let j=0; j < items.length; j++){
+                            if(items[j].idList == list[i].id){
+                                objItemsList.itemsList = items[i]
+                            }
+                        }
+                        for(let i=0; i < objItemsList.itemsList.length; i++){
                             %>
                             <form action="updtItem" method="post">
                                 <li>
                                     <label>
-                                        <input type="checkbox"/>
-                                        
+                                        <input type="checkbox" checked="true">
+                                        <p><%= objItemsList.itemsList.items[i].descr %></p>
                                         <span></span>
                                     </label>
                                 </li>
@@ -109,6 +126,7 @@
                     %>
                     </ul>
                 </div>
+            
         <%
                 }
             }

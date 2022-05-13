@@ -30,7 +30,6 @@ const { resolve } = require('path')
 
     //cadastro de item
     app.post('/addItem', (req, res) => {
-        console.log("Rodou o item");
         objItem.idList = req.body.id
         objItem.descr = req.body.descrItem
 
@@ -38,6 +37,7 @@ const { resolve } = require('path')
         insertItem(objItem)
         res.redirect('/')
     })
+
 
     //cadastro do usuario
     app.post('/cadastrando', (req, res) => {
@@ -61,7 +61,7 @@ const { resolve } = require('path')
             req.session.list = list
             res.redirect('/')
         }, (err) => {
-            console.log(err);
+            console.log(err)
         })
     })
 
@@ -89,24 +89,31 @@ const { resolve } = require('path')
             if(user){
                 objList.idUser = user.id
                 selectList(objList).then((list) => {
-                    req.session.list = list
-                    req.session.user = user
-                    res.render('home', {name: user.nome, login: user.login, list: list })
+                    selectItemByUser(user.id).then((items) => {
+                        console.log(items);
+                        req.session.list = list
+                        req.session.user = user
+                        req.session.items = items
+                        res.render('home', {name: user.nome, login: user.login, list: list, items: items})
+                    })
+                   
                 }, (err) => {
-                    console.log(err);
+                    console.log(err)
                 })
             }
             else
                 res.render('index')
         }, (err) => {
-            console.log(err);
+            console.log(err)
         })
     })
+
 
     //pagina inicial
     app.get('/', (req, res) => {
         if(req.session.user){
-            res.render('home', {name: req.session.user.nome, login: req.session.user.login, list: req.session.list})
+            res.render('home', {name: req.session.user.nome, login: req.session.user.login,
+                list: req.session.list, items: req.session.items})
         }
         else{
            res.render('index') 
@@ -151,6 +158,13 @@ const { resolve } = require('path')
             const daoItem = require('./controller/ItemsListDAO')
             return new Promise ( async (resolve) => {
                 resolve(await daoItem.selectAllItemsList(objItem))
+            })
+        }
+
+        const selectItemByUser = (idUser) => {
+            const daoItem = require('./controller/ItemsListDAO')
+            return new Promise ( async (resolve) => {
+                resolve(await daoItem.selectItemsByUser(idUser))
             })
         }
 
