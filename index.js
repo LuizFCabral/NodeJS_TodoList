@@ -35,7 +35,12 @@ const { resolve } = require('path')
 
         req.session.item = objItem
         insertItem(objItem)
-        res.redirect('/')
+        selectItemByUser(req.session.user.id).then((items) => {
+            req.session.items = items
+            res.redirect('/')
+        }, (err) => {
+            console.log(err)
+        })
     })
 
 
@@ -90,7 +95,6 @@ const { resolve } = require('path')
                 objList.idUser = user.id
                 selectList(objList).then((list) => {
                     selectItemByUser(user.id).then((items) => {
-                        console.log(items);
                         req.session.list = list
                         req.session.user = user
                         req.session.items = items

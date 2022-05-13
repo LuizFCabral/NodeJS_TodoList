@@ -103,25 +103,20 @@
                             </form>
                         </li>
                     <%
-                        var objItemsList = new Object()
                         for(let j=0; j < items.length; j++){
                             if(items[j].idList == list[i].id){
-                                objItemsList.itemsList = items[i]
+                                %>
+                                    <form action="updtItem" method="post">
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" checked="true">
+                                                <p><%= items[j].descr %></p>
+                                                <span></span>
+                                            </label>
+                                        </li>
+                                    </form>
+                                <%
                             }
-                        }
-                        for(let i=0; i < objItemsList.itemsList.length; i++){
-                            %>
-                            <form action="updtItem" method="post">
-                                <li>
-                                    <label>
-                                        <input type="checkbox" checked="true">
-                                        <p><%= objItemsList.itemsList.items[i].descr %></p>
-                                        <span></span>
-                                    </label>
-                                </li>
-                            </form>
-                            
-                            <%
                         }
                     %>
                     </ul>
