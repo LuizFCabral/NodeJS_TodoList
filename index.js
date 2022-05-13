@@ -22,10 +22,17 @@ const { resolve } = require('path')
     app.set ('view engine', 'ejs')
 
 //Routers
-    //lista
-    app.post('/list', (req, res) => {
-        const id = req.body.id
-        res.redirect('/')
+    //funções do header da lista
+    app.post('/headerFunc', (req, res) => {
+        objList.id = req.body.id
+
+        deleteTodoList(objList)
+        selectList(objList).then((list) => {
+            req.session.list = list
+            res.redirect('/')
+        }, (err) => {
+            console.log(err)
+        })
     })
 
     //cadastro de item
@@ -150,6 +157,11 @@ const { resolve } = require('path')
             return new Promise ( async (resolve) => {
                 resolve(await daoList.selectAllTodoList(objList))
             })
+        }
+
+        const deleteTodoList = async(objList) => {
+            const daoList = require('./controller/TodoListDAO')
+            await daoList.deleteTodoList(objList)
         }
 
     //ItemsList funtions

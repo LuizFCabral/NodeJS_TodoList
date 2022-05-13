@@ -1,22 +1,16 @@
-#Criação da base de dados
-create database todo_list;
-
-#Criando as tabelas
 create table users(
 	id int auto_increment primary key,
     nome varchar(35) not null,
     login varchar(50) not null,
     psw varchar(15) not null
-)default charset = utf8;
+);
 
-
-create table toDo_list(
+create table todo_list(
 	id int auto_increment primary key,
     idUser int not null,
     descr varchar(20) not null,
-    foreign key(idUser) references users(id)
-)default charset = utf8;
-
+    foreign key (idUser) references users(id) on delete cascade
+);
 
 create table items_list(
 	id int auto_increment primary key,
@@ -24,5 +18,5 @@ create table items_list(
     descr varchar(20) not null,
     sts enum('C', 'IC') default 'IC',
     priority enum('baixa', 'media', 'alta') default 'media',
-    foreign key (idList) references toDo_list(id)
-)default charset = utf8;
+    foreign key (idList) references toDo_list(id) on delete cascade
+);
