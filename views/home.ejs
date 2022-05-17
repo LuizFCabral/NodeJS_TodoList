@@ -109,7 +109,12 @@
                                     <form action="updtItem" method="post">
                                         <li>
                                             <label>
-                                                <input type="checkbox" checked="true">
+                                                <% if(items[j].sts == "C"){%>
+                                                    <input type="checkbox" checked="true">
+                                                <%}
+                                                else{ %>
+                                                    <input type="checkbox">
+                                                <%}%>
                                                 <p><%= items[j].descr %></p>
                                                 <span></span>
                                             </label>
