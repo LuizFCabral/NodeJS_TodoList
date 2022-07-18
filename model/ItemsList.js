@@ -6,7 +6,7 @@ class ItemsList{
         this._sts = sts
         this._priority = priority
     }
-
+    
     set id(int){
         this._id = int
     }
